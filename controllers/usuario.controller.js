@@ -6,7 +6,7 @@ const respuesta = (res, err, results) => {
         res.json({
             codigoRespuesta: -1,
             descripcionRespuesta: "Error",
-            objetoRespuesta: []
+            objetoRespuesta: [err.sqlMessage]
         });
     } else {
         res.json({
