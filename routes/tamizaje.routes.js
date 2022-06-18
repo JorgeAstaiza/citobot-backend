@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { obtenerTamizajes, obtenerTamizajesRangoFecha, obtenerTamizajesByUsuario, obtenerTamizajesByIDRangoFecha, obtenerTamizajesByID, obtenerTamizajesByTipoID, obtenerFotos } = require('../controllers/tamizajes.controller');
+const { obtenerTamizajes, obtenerTamizajesRangoFecha, obtenerTamizajesByUsuario, obtenerTamizajesByIDRangoFecha, obtenerTamizajesByID, obtenerTamizajesByTipoID, obtenerFotos, crearTamizaje, obtenerUltimoTamizaje } = require('../controllers/tamizajes.controller');
 const router = Router();
 
 /**
@@ -269,6 +269,84 @@ const router = Router();
  *                              ima_tipo: SI
  *                              ima_ruta: 1062331745_1_SI
  */
+
+/**
+ * @swagger
+ * /api/tamizajes/ultimo?id={id}:
+ *  get:
+ *      summary: obtener ultimo tamizaje
+ *      tags: [Tamizaje]
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: integer
+ *            required: true
+ *            description: identificacion del paciente
+ *      responses:
+ *          200:
+ *              description: tamizajes
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          example:
+ *                              max(tam_id): 6
+ */
+
+/**
+ * @swagger
+ * /api/tamizajes/crear:
+ *   post:
+ *     summary: crear un tamizaje
+ *     tags: [Tamizaje]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *              type: object
+ *              items: 
+ *                  tam_pac_per_identificacion:
+ *                      type: string
+ *                      descripcion: numero indentificacion paciente
+ *                  tam_usu_per_identificacion:
+ *                      type: string
+ *                      descripcion: numero indentificacion usuario
+ *                  tam_fecha:
+ *                      type: string
+ *                      descripcion: fecha toma
+ *                  tam_contraste:
+ *                      type: string
+ *                      descripcion: contraste
+ *                  tam_vph:
+ *                      type: string
+ *                      descripcion: vph
+ *                  tam_vph_no_info:
+ *                      type: string
+ *                      descripcion: numero informacion vph
+ *                  tam_niv_id:
+ *                      type: number
+ *                      descripcion: id nivel
+ *              example:
+ *                  tam_pac_per_identificacion: "123"
+ *                  tam_usu_per_identificacion: "123"
+ *                  tam_fecha: 2022-06-17
+ *                  tam_contraste: Ácido Acético
+ *                  tam_vph: Positivo
+ *                  tam_vph_no_info: "1.8"
+ *                  tam_niv_id: "2"
+ *     responses:
+ *       201:
+ *         description: Tamizaje creado exitosamente!
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/RespuestaGeneral'
+ *       500:
+ *         description: Some server error
+ */
+
 router.get('/todos', obtenerTamizajes);
 router.get('/conUsuario', obtenerTamizajesByUsuario);
 router.get('/rangoFecha', obtenerTamizajesRangoFecha);
@@ -276,6 +354,10 @@ router.get('/idRangoFecha', obtenerTamizajesByIDRangoFecha);
 router.get('/identificacion', obtenerTamizajesByID);
 router.get('/tipoIdentificacion', obtenerTamizajesByTipoID);
 router.get('/fotos', obtenerFotos);
+router.get('/ultimo', obtenerUltimoTamizaje);
+
+router.post('/crear', crearTamizaje);
+
 
 
 module.exports = router;

@@ -23,6 +23,22 @@ const obtenerUsuarios = async(req = request, res = response) => {
     });
 }
 
+const obtenerUsuarioById = async(req = request, res = response) => {
+    const { id } = req.query;
+
+    await pool.query(`SELECT p.per_identificacion, p.per_tip_id, p.per_primer_nombre, p.per_otros_nombres, p.per_primer_apellido, p.per_segundo_apellido, g.gen_nombre, u.usu_usuario, u.usu_email, pro.pro_nombre, u.usu_rol, u.usu_estado FROM usuario u INNER JOIN profesion pro on (u.usu_pro_id = pro.pro_id) INNER JOIN persona p on (u.usu_per_identificacion = p.per_identificacion) INNER JOIN genero g on (p.per_gen_id = g.gen_id) WHERE u.usu_per_identificacion='${id}';`, function(err, result){
+        respuesta(res, err, result)
+    });
+}
+
+const obtenerUsuarioByEmail = async(req = request, res = response) => {
+    const { email } = req.query;
+
+    await pool.query(`SELECT p.per_identificacion, p.per_tip_id, p.per_primer_nombre, p.per_otros_nombres, p.per_primer_apellido, p.per_segundo_apellido, g.gen_nombre, u.usu_usuario, u.usu_email, pro.pro_nombre, u.usu_rol, u.usu_estado FROM usuario u INNER JOIN profesion pro on (u.usu_pro_id = pro.pro_id) INNER JOIN persona p on (u.usu_per_identificacion = p.per_identificacion) INNER JOIN genero g on (p.per_gen_id = g.gen_id) WHERE u.usu_email='${email}';`, function(err, result){
+        respuesta(res, err, result)
+    });
+}
+
 const crearUsuario = async(req = request, res = response) => {
     console.log(req.body);
     const { usu_per_identificacion, usu_usuario, usu_clave, usu_email, usu_pro_id, usu_rol, usu_estado } = req.body;
@@ -54,5 +70,7 @@ module.exports = {
     obtenerUsuarios,
     crearUsuario,
     actualizarUsuario,
-    actualizarEstadoUsuario
+    actualizarEstadoUsuario,
+    obtenerUsuarioById,
+    obtenerUsuarioByEmail
 }

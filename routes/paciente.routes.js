@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getPaciente, crearPaciente, actualizarPaciente } = require('../controllers/pacientes.controller');
+const { getPaciente, crearPaciente, actualizarPaciente, getPacienteById, getPacienteByTipoId } = require('../controllers/pacientes.controller');
 const router = Router();
 
 
@@ -82,6 +82,60 @@ const router = Router();
  *  get:
  *      summary: obtener todos los pacientes
  *      tags: [Paciente]
+ *      responses:
+ *          200:
+ *              description: paciente
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              data: 
+ *                                  type: array
+ *                                  items:
+ *                                      $ref: '#/components/schemas/Paciente'          
+ */
+
+/**
+ * @swagger
+ * /api/pacientes/identificacion?id={id}:
+ *  get:
+ *      summary: obtener paciente por id
+ *      tags: [Paciente]
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: integer
+ *            required: true
+ *            description: numero identificacion del paciente
+ *      responses:
+ *          200:
+ *              description: paciente
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              data: 
+ *                                  type: array
+ *                                  items:
+ *                                      $ref: '#/components/schemas/Paciente'          
+ */
+
+/**
+ * @swagger
+ * /api/pacientes/identificacion?tipo_id={tipo_id}:
+ *  get:
+ *      summary: obtener paciente por id
+ *      tags: [Paciente]
+ *      parameters:
+ *          - in: path
+ *            name: tipo_id
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: tipo identificacion del paciente
  *      responses:
  *          200:
  *              description: paciente
@@ -215,6 +269,9 @@ const router = Router();
 
 
 router.get('/consultar', getPaciente);
+router.get('/identificacion', getPacienteById);
+router.get('/tipoId', getPacienteByTipoId);
+
 router.post('/crear', crearPaciente);
 router.put('/actualizar/:id', actualizarPaciente);
 

@@ -57,11 +57,26 @@ const obtenerTamizajesByTipoID = async(req = request, res = response) => {
     });
 }
 
-const obtenerFotos = async(req = request, res = response) => {;
+const obtenerFotos = async(req = request, res = response) => {
     await pool.query(`SELECT t.tam_id, t.tam_pac_per_identificacion, t.tam_fecha, t.tam_contraste, t.tam_vph, t.tam_vph_no_info, t.tam_niv_id, i.ima_tipo, i.ima_ruta FROM tamizaje t INNER JOIN imagen i ON (t.tam_id = i.ima_tam_id);`, function(err, result){
         respuesta(res, err, result)
     });
 }
+
+const obtenerUltimoTamizaje = async(req = request, res = response) => {
+    const { id } = req.query;
+    await pool.query(`SELECT max(tam_id) FROM tamizaje WHERE tam_pac_per_identificacion='${id}';`, function(err, result){
+        respuesta(res, err, result)
+    });
+}
+
+const crearTamizaje = async(req = request, res = response) => {
+    const { tam_pac_per_identificacion, tam_usu_per_identificacion, tam_fecha, tam_contraste, tam_vph, tam_vph_no_info, tam_niv_id } = req.body;
+    await pool.query(`INSERT INTO tamizaje (tam_pac_per_identificacion, tam_usu_per_identificacion, tam_fecha, tam_contraste, tam_vph, tam_vph_no_info, tam_niv_id) VALUES ( '${tam_pac_per_identificacion}', '${tam_usu_per_identificacion}', '${tam_fecha}', '${tam_contraste}', '${tam_vph}', '${tam_vph_no_info}', '${tam_niv_id}')`, function(err, result){
+        respuesta(res, err, result)
+    });
+}
+
 
 
 module.exports = {
@@ -71,5 +86,7 @@ module.exports = {
     obtenerTamizajesByIDRangoFecha,
     obtenerTamizajesByID,
     obtenerTamizajesByTipoID,
-    obtenerFotos
+    obtenerFotos,
+    crearTamizaje,
+    obtenerUltimoTamizaje
 }

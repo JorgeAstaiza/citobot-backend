@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { obtenerUsuarios, crearUsuario, actualizarUsuario, actualizarEstadoUsuario } = require('../controllers/usuario.controller');
+const { obtenerUsuarios, crearUsuario, actualizarUsuario, actualizarEstadoUsuario, obtenerUsuarioById, obtenerUsuarioByEmail } = require('../controllers/usuario.controller');
 const router = Router();
 
 /**
@@ -74,6 +74,60 @@ const router = Router();
  *  get:
  *      summary: obtener todos los usuarios
  *      tags: [Usuario]
+ *      responses:
+ *          200:
+ *              description: usuario
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              data: 
+ *                                  type: array
+ *                                  items:
+ *                                      $ref: '#/components/schemas/Usuario'          
+ */
+
+/**
+ * @swagger
+ * /api/usuarios/identificacion?id={id}:
+ *  get:
+ *      summary: obtener usuario por id
+ *      tags: [Usuario]
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: id del usuario 
+ *      responses:
+ *          200:
+ *              description: usuario
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              data: 
+ *                                  type: array
+ *                                  items:
+ *                                      $ref: '#/components/schemas/Usuario'          
+ */
+
+/**
+ * @swagger
+ * /api/usuarios/email?email={email}:
+ *  get:
+ *      summary: obtener usuario por email
+ *      tags: [Usuario]
+ *      parameters:
+ *          - in: path
+ *            name: email
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: email del usuario 
  *      responses:
  *          200:
  *              description: usuario
@@ -230,6 +284,9 @@ const router = Router();
  */
 
 router.get('/consultar', obtenerUsuarios);
+router.get('/identificacion', obtenerUsuarioById);
+router.get('/email', obtenerUsuarioByEmail);
+
 router.post('/crear', crearUsuario);
 router.put('/actualizar/:id', actualizarUsuario);
 router.put('/actualizarEstado/:id', actualizarEstadoUsuario);
