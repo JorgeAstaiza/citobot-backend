@@ -67,7 +67,6 @@ const router = Router();
  *      
  */
 
-
 /**
  * @swagger
  * /api/usuarios/consultar:
