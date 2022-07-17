@@ -1,7 +1,12 @@
-const { Router } = require('express');
-const { getPaciente, crearPaciente, actualizarPaciente, getPacienteById, getPacienteByTipoId } = require('../controllers/pacientes.controller');
+const { Router } = require("express");
+const {
+  getPaciente,
+  crearPaciente,
+  actualizarPaciente,
+  getPacienteById,
+  getPacienteByTipoId,
+} = require("../controllers/pacientes.controller");
 const router = Router();
-
 
 /**
  * @swagger
@@ -10,12 +15,15 @@ const router = Router();
  *          Paciente:
  *              type: object
  *              properties:
- *                  per_identificacion:
- *                      type: string
- *                      descripcion: numero indentificacion
  *                  per_tip_id:
  *                      type: string
  *                      descripcion: tipo de indentificacion
+ *                  pac_direccion:
+ *                      type: string
+ *                      descripcion: direccion de residencia
+ *                  pac_fecha_nacimiento:
+ *                      type: string
+ *                      descripcion: fecha nacimiento
  *                  per_primer_nombre:
  *                      type: string
  *                      descripcion: primer nombre
@@ -28,52 +36,127 @@ const router = Router();
  *                  per_segundo_apellido:
  *                      type: string
  *                      descripcion: segundo apellido
- *                  gen_nombre:
+ *                  per_identificacion:
  *                      type: string
- *                      descripcion: genero
- *                  pac_fecha_nacimiento:
+ *                      descripcion: numero de identificacion  
+ *                  pac_telefono:
  *                      type: string
- *                      descripcion: fecha nacimiento
- *                  pac_anticonceptivos_barrera:
+ *                      descripcion: numero telefonico
+ *                  pac_celular:
+ *                       type: string
+ *                       descripcion: numero de celular
+ *                  pac_correo:
  *                      type: string
- *                      descripcion: uso de anticonsecutivos
- *                  pac_nu_embarazos:
+ *                      descripcion: correo electronico
+ *                  pac_contacto_alternativo:
+ *                      type: string
+ *                      descripcion: nombre de contacto alternativo
+ *                  pac_telefono_contacto_alternativo:
+ *                      type: string
+ *                      descripcion: telefono de contacto alternativo
+ *                  pac_nivel_educacion:
+ *                      type: string
+ *                      descripcion: nivel educativo
+ *                  pac_estado_civil:
+ *                      type: string
+ *                      descripcion: estado civil
+ *                  pac_situacion_laboral:
+ *                      type: string
+ *                      descripcion: situacion laboral
+ *                  pac_eps_id:
  *                      type: integer
- *                      descripcion: numero de embarazos
- *                  pac_nu_parejas_sexuales:
+ *                      descripcion: id eps
+ *                  pac_regimen_salud:
+ *                      type: string
+ *                      descripcion: tipo de regimen de salud
+ *                  pac_estrato:
+ *                      type: integer
+ *                      descripcion: estrato socioeconomico
+ *                  pac_diabetes:
+ *                      type: string
+ *                      descripcion: diabetes
+ *                  pac_fuma:
+ *                      type: string
+ *                      descripcion: fumador
+ *                  pac_peso:
+ *                      type: number
+ *                      descripcion: peso del paciente
+ *                  pac_talla:
+ *                      type: number
+ *                      descripcion: talla del paciente
+ *                  pac_primera_mestruacion:
+ *                      type: integer
+ *                      descripcion: primera mestruacion
+ *                  pac_partos:
+ *                      type: string
+ *                      descripcion: partos
+ *                  pac_dispositivo_intrauterino:
+ *                      type: string
+ *                      descripcion: partos
+ *                  pac_tiempo_insercion_DIU:
+ *                      type: string
+ *                      descripcion: tiempo insercion DIU
+ *                  pac_anticonceptivos_orales:
+ *                      type: string
+ *                      descripcion: uso de anticonceptivos orales
+ *                  pac_parejas_sexuales:
  *                      type: integer
  *                      descripcion: numero de parejas sexuales
- *                  pac_antecedentes_ginecobstreticos:
+ *                  pac_relacion_condon:
  *                      type: string
- *                      descripcion: antecedes ginecobstreticos 
- *                  pac_caracteristicas_ginecobstetricas:
+ *                      descripcion: relaciones sexuales con condon
+ *                  pac_vacuna_vph:
  *                      type: string
- *                      descripcion: caracteristicas ginecobstreticos 
- *                  pac_otras_variables_demograficas:
+ *                      descripcion: vacuna vph
+ *                  pac_ultima_citologia:
  *                      type: string
- *                      descripcion: otras variables demograficas 
- *              required:
- *                  - per_identificacion
- *                  - per_tip_id
- *                  - per_primer_nombre
- *                  - per_otros_nombres
- *                  - per_primer_apellido
+ *                      descripcion: ultima citologia
+ *                  pac_prueba_ADN_VPH:
+ *                      type: string
+ *                      descripcion: prueba ADN VPH
+ *                  pac_menopausia:
+ *                      type: string
+ *                      descripcion: menopausia
+ *                  pac_infecciones_ts:
+ *                      type: string
+ *                      descripcion: infecciones ts
  *              example:
- *                  per_tip_id: "1061160752"
- *                  per_identificacion: CC
- *                  per_primer_nombre: Milena
- *                  per_otros_nombres: Yulieth
- *                  per_primer_apellido: Pito
- *                  per_segundo_apellido: Muñoz
- *                  gen_nombre: Femenino
+ *                  per_identificacion: 1062331745
+ *                  per_tip_id: TI
+ *                  per_primer_nombre: María
+ *                  per_otros_nombres: Mercedes
+ *                  per_primer_apellido: Castrillón
+ *                  per_segundo_apellido: Martínez
+ *                  pac_per_identificacion: 1062331745
  *                  pac_fecha_nacimiento: 2006-05-06T05:00:00.000Z
- *                  pac_anticonceptivos_barrera: No
- *                  pac_nu_embarazos: 0
- *                  pac_nu_parejas_sexuales: 0
- *                  pac_antecedentes_ginecobstreticos: Ninguno
- *                  pac_caracteristicas_ginecobstetricas: No se observan características anormales
- *                  pac_otras_variables_demograficas: Ninguna
- *      
+ *                  pac_direccion: null
+ *                  pac_telefono: 
+ *                  pac_celular: null
+ *                  pac_correo: null
+ *                  pac_contacto_alternativo: null
+ *                  pac_telefono_contacto_alternativo: null
+ *                  pac_nivel_educacion: Educación Primaria
+ *                  pac_estado_civil: Casada/Unión Libre
+ *                  pac_situacion_laboral: Obrera/Empleada
+ *                  pac_eps_id: 1
+ *                  pac_regimen_salud: Contributivo Cotizante
+ *                  pac_estrato: 0
+ *                  pac_diabetes: Si
+ *                  pac_fuma: Si
+ *                  pac_peso: 0
+ *                  pac_talla: 0
+ *                  pac_primera_mestruacion: 0
+ *                  pac_partos: Ninguno
+ *                  pac_dispositivo_intrauterino: Si
+ *                  pac_tiempo_insercion_DIU: <5 años
+ *                  pac_anticonceptivos_orales: Si
+ *                  pac_parejas_sexuales: 0
+ *                  pac_relacion_condon: Si
+ *                  pac_vacuna_vph: Sin vacuna
+ *                  pac_ultima_citologia: Menos de 3 años
+ *                  pac_prueba_ADN_VPH: No
+ *                  pac_menopausia: Si
+ *                  pac_infecciones_ts: Todas
  */
 
 /**
@@ -90,10 +173,10 @@ const router = Router();
  *                      schema:
  *                          type: object
  *                          properties:
- *                              data: 
+ *                              data:
  *                                  type: array
  *                                  items:
- *                                      $ref: '#/components/schemas/Paciente'          
+ *                                      $ref: '#/components/schemas/Paciente'
  */
 
 /**
@@ -117,15 +200,15 @@ const router = Router();
  *                      schema:
  *                          type: object
  *                          properties:
- *                              data: 
+ *                              data:
  *                                  type: array
  *                                  items:
- *                                      $ref: '#/components/schemas/Paciente'          
+ *                                      $ref: '#/components/schemas/Paciente'
  */
 
 /**
  * @swagger
- * /api/pacientes/identificacion?tipo_id={tipo_id}:
+ * /api/pacientes/tipoId?tipo_id={tipo_id}:
  *  get:
  *      summary: obtener paciente por id
  *      tags: [Paciente]
@@ -144,10 +227,10 @@ const router = Router();
  *                      schema:
  *                          type: object
  *                          properties:
- *                              data: 
+ *                              data:
  *                                  type: array
  *                                  items:
- *                                      $ref: '#/components/schemas/Paciente'          
+ *                                      $ref: '#/components/schemas/Paciente'
  */
 
 /**
@@ -162,40 +245,45 @@ const router = Router();
  *         application/json:
  *           schema:
  *              type: object
- *              items: 
- *                  pac_per_identificacion:
- *                      type: string
- *                      descripcion: numero indentificacion de una persona
- *                  pac_fecha_nacimiento:
- *                      type: string
- *                      descripcion: fecha nacimiento
- *                  pac_anticonceptivos_barrera:
- *                      type: string
- *                      descripcion: metodo anticonceptivo 
- *                  pac_nu_embarazos:
- *                      type: integer
- *                      descripcion: numero de embarazos
- *                  pac_nu_parejas_sexuales:
- *                      type: integer
- *                      descripcion: numero de parejas sexuales
- *                  pac_antecedentes_ginecobstreticos:
- *                      type: string
- *                      descripcion: antecedentes ginecobstreticos 
- *                  pac_caracteristicas_ginecobstetricas:
- *                      type: string
- *                      descripcion: caracteristicas ginecobstetricas
- *                  pac_otras_variables_demograficas:
- *                      type: string
- *                      descripcion: variables demograficas
+ *              items:
+ *                  $ref: '#/components/schemas/Paciente'
  *              example:
- *                  pac_per_identificacion: 10564454
- *                  pac_fecha_nacimiento: 1983/08/13
- *                  pac_anticonceptivos_barrera: No
- *                  pac_nu_embarazos: 0
- *                  pac_nu_parejas_sexuales: 1
- *                  pac_antecedentes_ginecobstreticos: Ninguno
- *                  pac_caracteristicas_ginecobstetricas: Ninguno
- *                  pac_otras_variables_demograficas: Ninguno
+ *                  per_identificacion: 1062331745
+ *                  per_tip_id: TI
+ *                  per_primer_nombre: María
+ *                  per_otros_nombres: Mercedes
+ *                  per_primer_apellido: Castrillón
+ *                  per_segundo_apellido: Martínez
+ *                  pac_per_identificacion: 1062331745
+ *                  pac_fecha_nacimiento: 2006-05-06T05:00:00.000Z
+ *                  pac_direccion: null
+ *                  pac_telefono: 
+ *                  pac_celular: null
+ *                  pac_correo: null
+ *                  pac_contacto_alternativo: null
+ *                  pac_telefono_contacto_alternativo: null
+ *                  pac_nivel_educacion: Educación Primaria
+ *                  pac_estado_civil: Casada/Unión Libre
+ *                  pac_situacion_laboral: Obrera/Empleada
+ *                  pac_eps_id: 1
+ *                  pac_regimen_salud: Contributivo Cotizante
+ *                  pac_estrato: 0
+ *                  pac_diabetes: Si
+ *                  pac_fuma: Si
+ *                  pac_peso: 0
+ *                  pac_talla: 0
+ *                  pac_primera_mestruacion: 0
+ *                  pac_partos: Ninguno
+ *                  pac_dispositivo_intrauterino: Si
+ *                  pac_tiempo_insercion_DIU: <5 años
+ *                  pac_anticonceptivos_orales: Si
+ *                  pac_parejas_sexuales: 0
+ *                  pac_relacion_condon: Si
+ *                  pac_vacuna_vph: Sin vacuna
+ *                  pac_ultima_citologia: Menos de 3 años
+ *                  pac_prueba_ADN_VPH: No
+ *                  pac_menopausia: Si
+ *                  pac_infecciones_ts: Todas
  *     responses:
  *       201:
  *         description: Paciente creado exitosamente!
@@ -226,36 +314,45 @@ const router = Router();
  *         application/json:
  *           schema:
  *              type: object
- *              items: 
- *                  pac_fecha_nacimiento:
- *                      type: string
- *                      descripcion: fecha de nacimiento
- *                  pac_anticonceptivos_barrera:
- *                      type: string
- *                      descripcion: metodo anticonceptivo
- *                  pac_nu_embarazos:
- *                      type: integer
- *                      descripcion: numero de embarazos
- *                  pac_nu_parejas_sexuales:
- *                      type: integer
- *                      descripcion: numero de parejas sexuales
- *                  pac_antecedentes_ginecobstreticos:
- *                      type: string
- *                      descripcion: antecedentes ginecobstreticos
- *                  pac_caracteristicas_ginecobstetricas:
- *                      type: string
- *                      descripcion: caracteristicas ginecobstetricas
- *                  pac_otras_variables_demograficas:
- *                      type: string
- *                      descripcion: variables demograficas
+ *              items:
+ *                  $ref: '#/components/schemas/Paciente'
  *              example:
- *                  pac_fecha_nacimiento: 1983/08/15
- *                  pac_anticonceptivos_barrera: Condón
- *                  pac_nu_embarazos: 1
- *                  pac_nu_parejas_sexuales: 2
- *                  pac_antecedentes_ginecobstreticos: No aplica
- *                  pac_caracteristicas_ginecobstetricas: No Aplica
- *                  pac_otras_variables_demograficas: No Aplica
+ *                  per_identificacion: 1062331745
+ *                  per_tip_id: TI
+ *                  per_primer_nombre: María
+ *                  per_otros_nombres: Mercedes
+ *                  per_primer_apellido: Castrillón
+ *                  per_segundo_apellido: Martínez
+ *                  pac_per_identificacion: 1062331745
+ *                  pac_fecha_nacimiento: 2006-05-06T05:00:00.000Z
+ *                  pac_direccion: null
+ *                  pac_telefono: 
+ *                  pac_celular: null
+ *                  pac_correo: null
+ *                  pac_contacto_alternativo: null
+ *                  pac_telefono_contacto_alternativo: null
+ *                  pac_nivel_educacion: Educación Primaria
+ *                  pac_estado_civil: Casada/Unión Libre
+ *                  pac_situacion_laboral: Obrera/Empleada
+ *                  pac_eps_id: 1
+ *                  pac_regimen_salud: Contributivo Cotizante
+ *                  pac_estrato: 0
+ *                  pac_diabetes: Si
+ *                  pac_fuma: Si
+ *                  pac_peso: 0
+ *                  pac_talla: 0
+ *                  pac_primera_mestruacion: 0
+ *                  pac_partos: Ninguno
+ *                  pac_dispositivo_intrauterino: Si
+ *                  pac_tiempo_insercion_DIU: <5 años
+ *                  pac_anticonceptivos_orales: Si
+ *                  pac_parejas_sexuales: 0
+ *                  pac_relacion_condon: Si
+ *                  pac_vacuna_vph: Sin vacuna
+ *                  pac_ultima_citologia: Menos de 3 años
+ *                  pac_prueba_ADN_VPH: No
+ *                  pac_menopausia: Si
+ *                  pac_infecciones_ts: Todas
  *     responses:
  *       200:
  *         description: Paciente actualizado exitosamente!
@@ -268,11 +365,12 @@ const router = Router();
  */
 
 
-router.get('/consultar', getPaciente);
-router.get('/identificacion', getPacienteById);
-router.get('/tipoId', getPacienteByTipoId);
 
-router.post('/crear', crearPaciente);
-router.put('/actualizar/:id', actualizarPaciente);
+router.get("/consultar", getPaciente);
+router.get("/identificacion", getPacienteById);
+router.get("/tipoId", getPacienteByTipoId);
+
+router.post("/crear", crearPaciente);
+router.put("/actualizar/:id", actualizarPaciente);
 
 module.exports = router;

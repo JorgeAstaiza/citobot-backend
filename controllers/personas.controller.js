@@ -27,7 +27,7 @@ const crearPersona = async(req = request, res = response) => {
     console.log(req.body);
     const { per_identificacion, per_tip_id, per_primer_nombre, per_otros_nombres, per_primer_apellido, per_segundo_apellido, per_gen_id } = req.body;
 
-    await pool.query(`INSERT INTO persona (per_identificacion, per_tip_id, per_primer_nombre, per_otros_nombres, per_primer_apellido, per_segundo_apellido, per_gen_id) VALUES ( "${per_identificacion}", "${per_tip_id}", "${per_primer_nombre}", "${per_otros_nombres}", "${per_primer_apellido}", "${per_segundo_apellido}", "${per_gen_id}");`, function(err, result){
+    await pool.query(`INSERT INTO persona (per_identificacion, per_primer_nombre, per_otros_nombres, per_primer_apellido, per_segundo_apellido, per_gen_id, per_tip_id) VALUES ( "${per_identificacion}", "${per_primer_nombre}", "${per_otros_nombres}", "${per_primer_apellido}", "${per_segundo_apellido}", "${per_gen_id}", "${per_tip_id}");`, function(err, result){
         respuesta(res, err, result)
     });
 }

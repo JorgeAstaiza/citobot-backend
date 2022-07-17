@@ -32,7 +32,8 @@ class Server {
         this.tamizajePath = '/api/tamizajes'
         this.riesgoPath = '/api/riesgos'
         this.imagenesPath = '/api/imagenes'
-
+        this.epsPath = '/api/eps'
+        this.enumPath = '/api/enum'
 
         this.conectarDB(); //conexion base de datos
         this.config(); // middlewares
@@ -58,6 +59,8 @@ class Server {
         this.app.use(this.tamizajePath, require('../routes/tamizaje.routes'));
         this.app.use(this.riesgoPath, require('../routes/nivel_riesgo.routes'));
         this.app.use(this.imagenesPath, require('../routes/imagenes.routes'));
+        this.app.use(this.epsPath, require('../routes/eps.routes'));
+        this.app.use(this.enumPath, require('../routes/enums.routes'));
 
     }
 
