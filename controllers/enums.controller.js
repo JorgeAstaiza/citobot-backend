@@ -22,7 +22,7 @@ const consutarEnum = async(req = request, res = response) => {
     const qr = await pool.query(`SELECT SUBSTRING(COLUMN_TYPE,5) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='u214255937_citobot' AND TABLE_NAME='${tabla}' AND COLUMN_NAME='${columna}';`, function(err, result){
         respuesta(res, err, result)
     });
-    console.log(qr.sql);
+    console.log(qr.sql);    
 }
 
 module.exports = {

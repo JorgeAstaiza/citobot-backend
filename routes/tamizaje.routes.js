@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { obtenerTamizajes, obtenerTamizajesRangoFecha, obtenerTamizajesByUsuario, obtenerTamizajesByIDRangoFecha, obtenerTamizajesByID, obtenerTamizajesByTipoID, obtenerFotos, crearTamizaje, obtenerUltimoTamizaje } = require('../controllers/tamizajes.controller');
+const { obtenerTamizajes, obtenerTamizajesRangoFecha, obtenerTamizajesByUsuario, obtenerTamizajesByIDRangoFecha, obtenerTamizajesByID, obtenerTamizajesByTipoID, obtenerFotos, crearTamizaje, obtenerUltimoTamizaje, obtenerTamizajesByIdTamizaje } = require('../controllers/tamizajes.controller');
 const router = Router();
 
 /**
@@ -296,6 +296,38 @@ const router = Router();
 
 /**
  * @swagger
+ * /api/tamizajes/id?id_tam={id_tam}:
+ *  get:
+ *      summary: obtener tamizaje por id
+ *      tags: [Tamizaje]
+ *      parameters:
+ *          - in: path
+ *            name: id_tam
+ *            schema:
+ *              type: integer
+ *            required: true
+ *            description: id del tamizaje
+ *      responses:
+ *          200:
+ *              description: tamizajes
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          example:
+ *                              per_tip_id: CC
+ *                              per_identificacion: 34654123
+ *                              tam_id: 2
+ *                              tam_fecha: 2022-05-26T05:00:00.000Z
+ *                              tam_contraste: Ácido Acético
+ *                              tam_vph: Positivo
+ *                              tam_vph_no_info: 7.2
+ *                              tam_niv_id: 1
+ *                              niv_mensaje: Sin riesgo de cáncer
+ */
+
+/**
+ * @swagger
  * /api/tamizajes/crear:
  *   post:
  *     summary: crear un tamizaje
@@ -355,6 +387,7 @@ router.get('/identificacion', obtenerTamizajesByID);
 router.get('/tipoIdentificacion', obtenerTamizajesByTipoID);
 router.get('/fotos', obtenerFotos);
 router.get('/ultimo', obtenerUltimoTamizaje);
+router.get('/id', obtenerTamizajesByIdTamizaje);
 
 router.post('/crear', crearTamizaje);
 
