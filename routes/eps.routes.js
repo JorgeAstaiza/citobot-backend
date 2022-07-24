@@ -56,7 +56,6 @@ const router = Router();
  *              items:
  *                  $ref: '#/components/schemas/Eps'
  *              example:
- *                  eps_id: 2
  *                  eps_nombre: coomeva
  *     responses:
  *       201:
@@ -107,7 +106,7 @@ const router = Router();
  *            name: id
  *            schema:
  *              type: integer
- *            required: true 
+ *            required: true
  *            description: id de la eps
  *     responses:
  *       201:
@@ -120,9 +119,9 @@ const router = Router();
  *         description: Some server error
  */
 
-router.get('/consultar', consultarEps)
-router.post('/crear', insertarEps)
-router.put('/actualizar/:id', actualizarEps)
-router.delete('/eliminar/:id', eliminarEps)
+router.get('/consultar', consultarEps);
+router.post('/crear', insertarEps);
+router.put('/actualizar/:id', actualizarEps);
+router.delete('/eliminar/:id', eliminarEps);
 
 module.exports = router;
