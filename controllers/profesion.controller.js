@@ -18,7 +18,7 @@ const respuesta = (res, err, results) => {
 };
 
 const getProfesiones = async (req = request, res = response) => {
-	await pool.query('SELECT pro_id, pro_nombre FROM profesion;', function (err, result) {
+	await pool.query('SELECT pro_id, pro_nombre FROM profesion ORDER BY pro_id ASC;', function (err, result) {
 		respuesta(res, err, result);
 	});
 };
