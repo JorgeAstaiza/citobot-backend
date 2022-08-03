@@ -1,5 +1,6 @@
 const { response, request } = require('express');
 const { pool } = require('../database/config');
+const tokenGlobal = 'Authorization';
 
 const respuesta = (res, err, results) => {
 	if (err) {
@@ -19,7 +20,7 @@ const respuesta = (res, err, results) => {
 
 const insertarEps = async (req = request, res = response) => {
 	const { eps_nombre } = req.body;
-	const token = req.header('token');
+	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(`INSERT INTO eps (eps_nombre) VALUES ('${eps_nombre}');`, function (err, result) {
 			respuesta(res, err, result);
@@ -32,7 +33,7 @@ const insertarEps = async (req = request, res = response) => {
 const actualizarEps = async (req = request, res = response) => {
 	const { id } = req.params;
 	const { eps_nombre } = req.body;
-	const token = req.header('token');
+	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(`UPDATE eps SET eps_nombre='${eps_nombre}' WHERE eps_id=${id};`, function (err, result) {
 			respuesta(res, err, result);
@@ -43,7 +44,7 @@ const actualizarEps = async (req = request, res = response) => {
 };
 
 const consultarEps = async (req = request, res = response) => {
-	const token = req.header('token');
+	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(`SELECT eps_id, eps_nombre FROM eps;`, function (err, result) {
 			respuesta(res, err, result);
@@ -55,7 +56,7 @@ const consultarEps = async (req = request, res = response) => {
 
 const eliminarEps = async (req = request, res = response) => {
 	const { id } = req.params;
-	const token = req.header('token');
+	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(`DELETE FROM eps where eps_id=${id};`, function (err, result) {
 			respuesta(res, err, result);

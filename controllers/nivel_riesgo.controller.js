@@ -1,5 +1,6 @@
 const { response, request } = require('express');
 const { pool } = require('../database/config');
+const tokenGlobal = 'Authorization';
 
 const respuesta = (res, err, results) => {
 	if (err) {
@@ -19,7 +20,7 @@ const respuesta = (res, err, results) => {
 
 const crearRiesgo = async (req = request, res = response) => {
 	const { niv_id, niv_mensaje, niv_descripcion } = req.body;
-	const token = req.header('token');
+	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(
 			`INSERT INTO nivel_riesgo (niv_id, niv_mensaje, niv_descripcion) values (${niv_id},'${niv_mensaje}','${niv_descripcion}');`,
@@ -35,7 +36,7 @@ const crearRiesgo = async (req = request, res = response) => {
 const actualizarRiesgo = async (req = request, res = response) => {
 	const { niv_mensaje, niv_descripcion } = req.body;
 	const { id } = req.params;
-	const token = req.header('token');
+	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(
 			`UPDATE nivel_riesgo SET niv_mensaje='${niv_mensaje}', niv_descripcion='${niv_descripcion}' WHERE niv_id=${id};`,
@@ -50,7 +51,7 @@ const actualizarRiesgo = async (req = request, res = response) => {
 
 const eliminarRiesgo = async (req = request, res = response) => {
 	const { id } = req.params;
-	const token = req.header('token');
+	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(`DELETE FROM nivel_riesgo WHERE niv_id=${id};`, function (err, result) {
 			respuesta(res, err, result);
@@ -61,7 +62,7 @@ const eliminarRiesgo = async (req = request, res = response) => {
 };
 
 const obtenerRiesgos = async (req = request, res = response) => {
-	const token = req.header('token');
+	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(`SELECT niv_id, niv_descripcion, niv_mensaje FROM nivel_riesgo;`, function (err, result) {
 			respuesta(res, err, result);

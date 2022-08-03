@@ -1,5 +1,6 @@
 const { response, request } = require('express');
 const { pool } = require('../database/config');
+const tokenGlobal = 'Authorization';
 
 const respuesta = (res, err, results) => {
 	if (err) {
@@ -18,7 +19,7 @@ const respuesta = (res, err, results) => {
 };
 
 const obtenerUsuarios = async (req = request, res = response) => {
-	const token = req.header('token');
+	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(
 			'SELECT p.per_identificacion, p.per_tip_id, p.per_primer_nombre, p.per_otros_nombres, p.per_primer_apellido, p.per_segundo_apellido, g.gen_nombre, u.usu_usuario, u.usu_email, pro.pro_nombre, u.usu_rol, u.usu_estado FROM usuario u INNER JOIN profesion pro on (u.usu_pro_id = pro.pro_id) INNER JOIN persona p on (u.usu_per_identificacion = p.per_identificacion) INNER JOIN genero g on (p.per_gen_id = g.gen_id);',
@@ -33,7 +34,7 @@ const obtenerUsuarios = async (req = request, res = response) => {
 
 const obtenerUsuarioById = async (req = request, res = response) => {
 	const { id } = req.query;
-	const token = req.header('token');
+	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(
 			`SELECT p.per_identificacion, p.per_tip_id, p.per_primer_nombre, p.per_otros_nombres, p.per_primer_apellido, p.per_segundo_apellido, g.gen_nombre, u.usu_usuario, u.usu_email, pro.pro_nombre, u.usu_rol, u.usu_estado FROM usuario u INNER JOIN profesion pro on (u.usu_pro_id = pro.pro_id) INNER JOIN persona p on (u.usu_per_identificacion = p.per_identificacion) INNER JOIN genero g on (p.per_gen_id = g.gen_id) WHERE u.usu_per_identificacion='${id}';`,
@@ -48,7 +49,7 @@ const obtenerUsuarioById = async (req = request, res = response) => {
 
 const obtenerUsuarioByEmail = async (req = request, res = response) => {
 	const { email } = req.query;
-	const token = req.header('token');
+	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(
 			`SELECT p.per_identificacion, p.per_tip_id, p.per_primer_nombre, p.per_otros_nombres, p.per_primer_apellido, p.per_segundo_apellido, g.gen_nombre, u.usu_usuario, u.usu_email, pro.pro_nombre, u.usu_rol, u.usu_estado FROM usuario u INNER JOIN profesion pro on (u.usu_pro_id = pro.pro_id) INNER JOIN persona p on (u.usu_per_identificacion = p.per_identificacion) INNER JOIN genero g on (p.per_gen_id = g.gen_id) WHERE u.usu_email='${email}';`,
@@ -63,7 +64,7 @@ const obtenerUsuarioByEmail = async (req = request, res = response) => {
 
 const crearUsuario = async (req = request, res = response) => {
 	const { usu_per_identificacion, usu_usuario, usu_clave, usu_email, usu_pro_id, usu_rol, usu_estado } = req.body;
-	const token = req.header('token');
+	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(
 			`INSERT INTO usuario (usu_per_identificacion, usu_usuario, usu_clave, usu_email, usu_pro_id, usu_rol, usu_estado) VALUES ( "${usu_per_identificacion}", "${usu_usuario}", "${usu_clave}", "${usu_email}", ${usu_pro_id}, "${usu_rol}", "${usu_estado}");`,
@@ -79,7 +80,7 @@ const crearUsuario = async (req = request, res = response) => {
 const actualizarUsuario = async (req = request, res = response) => {
 	const { id } = req.params;
 	const { usu_usuario, usu_clave, usu_email, usu_pro_id, usu_rol } = req.body;
-	const token = req.header('token');
+	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(
 			`UPDATE usuario SET usu_usuario="${usu_usuario}", usu_clave="${usu_clave}", usu_email="${usu_email}", usu_pro_id=${usu_pro_id}, usu_rol="${usu_rol}" WHERE usu_per_identificacion=${id};`,
@@ -95,7 +96,7 @@ const actualizarUsuario = async (req = request, res = response) => {
 const actualizarEstadoUsuario = async (req = request, res = response) => {
 	const { id } = req.params;
 	const { usu_estado } = req.body;
-	const token = req.header('token');
+	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(
 			`UPDATE usuario SET usu_estado="${usu_estado}" WHERE usu_per_identificacion=${id};`,
