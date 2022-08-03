@@ -1,11 +1,11 @@
-const { Router } = require("express");
+const { Router } = require('express');
 const {
-  getPaciente,
-  crearPaciente,
-  actualizarPaciente,
-  getPacienteById,
-  getPacienteByTipoId,
-} = require("../controllers/pacientes.controller");
+	getPaciente,
+	crearPaciente,
+	actualizarPaciente,
+	getPacienteById,
+	getPacienteByTipoId
+} = require('../controllers/pacientes.controller');
 const router = Router();
 
 /**
@@ -38,7 +38,7 @@ const router = Router();
  *                      descripcion: segundo apellido
  *                  per_identificacion:
  *                      type: string
- *                      descripcion: numero de identificacion  
+ *                      descripcion: numero de identificacion
  *                  pac_telefono:
  *                      type: string
  *                      descripcion: numero telefonico
@@ -130,7 +130,7 @@ const router = Router();
  *                  pac_per_identificacion: 1062331745
  *                  pac_fecha_nacimiento: 2006-05-06T05:00:00.000Z
  *                  pac_direccion: null
- *                  pac_telefono: 
+ *                  pac_telefono:
  *                  pac_celular: null
  *                  pac_correo: null
  *                  pac_contacto_alternativo: null
@@ -257,7 +257,7 @@ const router = Router();
  *                  pac_per_identificacion: 1062331745
  *                  pac_fecha_nacimiento: 2006-05-06T05:00:00.000Z
  *                  pac_direccion: null
- *                  pac_telefono: 
+ *                  pac_telefono:
  *                  pac_celular: null
  *                  pac_correo: null
  *                  pac_contacto_alternativo: null
@@ -326,7 +326,7 @@ const router = Router();
  *                  pac_per_identificacion: 1062331745
  *                  pac_fecha_nacimiento: 2006-05-06T05:00:00.000Z
  *                  pac_direccion: null
- *                  pac_telefono: 
+ *                  pac_telefono:
  *                  pac_celular: null
  *                  pac_correo: null
  *                  pac_contacto_alternativo: null
@@ -364,13 +364,11 @@ const router = Router();
  *         description: Some server error
  */
 
+router.get('/consultar', getPaciente);
+router.get('/ ', getPacienteById);
+router.get('/tipoId', getPacienteByTipoId);
 
-
-router.get("/consultar", getPaciente);
-router.get("/identificacion", getPacienteById);
-router.get("/tipoId", getPacienteByTipoId);
-
-router.post("/crear", crearPaciente);
-router.put("/actualizar/:id", actualizarPaciente);
+router.post('/crear', crearPaciente);
+router.put('/actualizar/:id', actualizarPaciente);
 
 module.exports = router;

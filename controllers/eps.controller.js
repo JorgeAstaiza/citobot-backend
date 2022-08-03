@@ -19,31 +19,50 @@ const respuesta = (res, err, results) => {
 
 const insertarEps = async (req = request, res = response) => {
 	const { eps_nombre } = req.body;
-	const qr = await pool.query(`INSERT INTO eps (eps_nombre) VALUES ('${eps_nombre}');`, function (err, result) {
-		respuesta(res, err, result);
-	});
-	console.log(qr.sql);
+	const token = req.header('token');
+	if (token) {
+		await pool.query(`INSERT INTO eps (eps_nombre) VALUES ('${eps_nombre}');`, function (err, result) {
+			respuesta(res, err, result);
+		});
+	} else {
+		res.status(403).send({ error: 'no autorizado' });
+	}
 };
 
 const actualizarEps = async (req = request, res = response) => {
 	const { id } = req.params;
 	const { eps_nombre } = req.body;
-	await pool.query(`UPDATE eps SET eps_nombre='${eps_nombre}' WHERE eps_id=${id};`, function (err, result) {
-		respuesta(res, err, result);
-	});
+	const token = req.header('token');
+	if (token) {
+		await pool.query(`UPDATE eps SET eps_nombre='${eps_nombre}' WHERE eps_id=${id};`, function (err, result) {
+			respuesta(res, err, result);
+		});
+	} else {
+		res.status(403).send({ error: 'no autorizado' });
+	}
 };
 
 const consultarEps = async (req = request, res = response) => {
-	await pool.query(`SELECT eps_id, eps_nombre FROM eps;`, function (err, result) {
-		respuesta(res, err, result);
-	});
+	const token = req.header('token');
+	if (token) {
+		await pool.query(`SELECT eps_id, eps_nombre FROM eps;`, function (err, result) {
+			respuesta(res, err, result);
+		});
+	} else {
+		res.status(403).send({ error: 'no autorizado' });
+	}
 };
 
 const eliminarEps = async (req = request, res = response) => {
 	const { id } = req.params;
-	await pool.query(`DELETE FROM eps where eps_id=${id};`, function (err, result) {
-		respuesta(res, err, result);
-	});
+	const token = req.header('token');
+	if (token) {
+		await pool.query(`DELETE FROM eps where eps_id=${id};`, function (err, result) {
+			respuesta(res, err, result);
+		});
+	} else {
+		res.status(403).send({ error: 'no autorizado' });
+	}
 };
 
 module.exports = {

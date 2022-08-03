@@ -18,16 +18,26 @@ const respuesta = (res, err, results) => {
 };
 
 const getProfesiones = async (req = request, res = response) => {
-	await pool.query('SELECT pro_id, pro_nombre FROM profesion ORDER BY pro_id ASC;', function (err, result) {
-		respuesta(res, err, result);
-	});
+	const token = req.header('token');
+	if (token) {
+		await pool.query('SELECT pro_id, pro_nombre FROM profesion ORDER BY pro_id ASC;', function (err, result) {
+			respuesta(res, err, result);
+		});
+	} else {
+		res.status(403).send({ error: 'no autorizado' });
+	}
 };
 
 const createProfesion = async (req = request, res = response) => {
 	const { pro_nombre } = req.body;
-	await pool.query(`INSERT INTO profesion (pro_nombre) VALUES ('${pro_nombre}');`, function (err, result) {
-		respuesta(res, err, result);
-	});
+	const token = req.header('token');
+	if (token) {
+		await pool.query(`INSERT INTO profesion (pro_nombre) VALUES ('${pro_nombre}');`, function (err, result) {
+			respuesta(res, err, result);
+		});
+	} else {
+		res.status(403).send({ error: 'no autorizado' });
+	}
 };
 
 module.exports = {
