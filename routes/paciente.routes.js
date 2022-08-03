@@ -365,7 +365,7 @@ const router = Router();
  */
 
 router.get('/consultar', getPaciente);
-router.get('identificacion/ ', getPacienteById);
+router.get('/identificacion', getPacienteById);
 router.get('/tipoId', getPacienteByTipoId);
 
 router.post('/crear', crearPaciente);
