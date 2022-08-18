@@ -19,11 +19,11 @@ const respuesta = (res, err, results) => {
 };
 
 const crearRiesgo = async (req = request, res = response) => {
-	const { niv_id, niv_mensaje, niv_descripcion } = req.body;
+	const { niv_mensaje, niv_descripcion } = req.body;
 	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(
-			`INSERT INTO nivel_riesgo (niv_id, niv_mensaje, niv_descripcion) values (${niv_id},'${niv_mensaje}','${niv_descripcion}');`,
+			`INSERT INTO nivel_riesgo (niv_mensaje, niv_descripcion) values ('${niv_mensaje}','${niv_descripcion}');`,
 			function (err, result) {
 				respuesta(res, err, result);
 			}
