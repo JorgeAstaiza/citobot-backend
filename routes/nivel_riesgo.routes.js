@@ -1,5 +1,10 @@
 const { Router } = require('express');
-const { crearRiesgo, actualizarRiesgo, eliminarRiesgo, obtenerRiesgos } = require('../controllers/nivel_riesgo.controller');
+const {
+	crearRiesgo,
+	actualizarRiesgo,
+	eliminarRiesgo,
+	obtenerRiesgos
+} = require('../controllers/nivel_riesgo.controller');
 const router = Router();
 
 /**
@@ -37,7 +42,6 @@ const router = Router();
  *           schema:
  *              $ref: '#/components/schemas/Riesgo'
  *              example:
- *                  niv_id: 1
  *                  niv_descripcion: No se aprecian niveles cercanos a cáncer
  *                  niv_mensaje: Sin riesgo de cáncer
  *     responses:
@@ -68,7 +72,7 @@ const router = Router();
  *       required: true
  *       content:
  *         application/json:
- *           schema:             
+ *           schema:
  *              example:
  *                  niv_descripcion: No se aprecian niveles cercanos a cáncer
  *                  niv_mensaje: Sin riesgo de cáncer
@@ -121,16 +125,15 @@ const router = Router();
  *                      schema:
  *                          type: object
  *                          properties:
- *                              data: 
+ *                              data:
  *                                  type: array
  *                                  items:
- *                                      $ref: '#/components/schemas/Riesgo'          
+ *                                      $ref: '#/components/schemas/Riesgo'
  */
 
 router.post('/crear', crearRiesgo);
 router.put('/actualizar/:id', actualizarRiesgo);
 router.delete('/eliminar/:id', eliminarRiesgo);
 router.get('/consultar', obtenerRiesgos);
-
 
 module.exports = router;

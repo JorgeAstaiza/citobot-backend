@@ -35,6 +35,7 @@ class Server {
 		this.epsPath = '/api/eps';
 		this.enumPath = '/api/enum';
 		this.profesionPath = '/api/profesion';
+		this.configuracionPath = '/api/configuracion';
 
 		this.conectarDB(); //conexion base de datos
 		this.config(); // middlewares
@@ -63,6 +64,7 @@ class Server {
 		this.app.use(this.epsPath, require('../routes/eps.routes'));
 		this.app.use(this.enumPath, require('../routes/enums.routes'));
 		this.app.use(this.profesionPath, require('../routes/profesion.routes'));
+		this.app.use(this.configuracionPath, require('../routes/configuracion.routes'));
 	}
 
 	start() {
