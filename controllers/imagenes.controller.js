@@ -1,7 +1,7 @@
 const { response, request } = require('express');
 const { pool } = require('../database/config');
 const tokenGlobal = 'Authorization';
-
+const fs = require('fs');
 const respuesta = (res, err, results) => {
 	if (err) {
 		res.json({
@@ -16,6 +16,31 @@ const respuesta = (res, err, results) => {
 			objetoRespuesta: results
 		});
 	}
+};
+
+const guardarImagenFTP = async (req = request, res = response) => {
+	const { base64, nombre } = req.body;
+	const ftp = require('basic-ftp');
+	var base64Data = base64.replace(/^data:image\/png;base64,/, '');
+	const buffer = Buffer.from(base64, 'base64');
+	fs.writeFile(`tamizajes/${nombre}`, base64Data, 'base64', function (err) {
+		console.log(err);
+	});
+	const client = new ftp.Client();
+	client.ftp.verbose = true;
+	try {
+		await client.access({
+			host: 'alexandercordoba.com',
+			user: 'u320411275',
+			password: '123QweAsd#%/',
+			secure: false
+		});
+		console.log(await client.list());
+		await client.uploadFrom(`tamizajes/${nombre}`, nombre);
+	} catch (err) {
+		console.log(err);
+	}
+	client.close();
 };
 
 const insertarImagen = async (req = request, res = response) => {
@@ -79,5 +104,6 @@ module.exports = {
 	insertarImagen,
 	actualizarImagen,
 	eliminarImagen,
-	obtenerImagenesByID
+	obtenerImagenesByID,
+	guardarImagenFTP
 };

@@ -139,7 +139,7 @@ const router = Router();
 /**
  * @swagger
  * /api/configuracion/eliminar/{conf_id}:
- *  put:
+ *  delete:
  *      summary: elimina una configuracion
  *      tags: [Configuracion]
  *      responses:

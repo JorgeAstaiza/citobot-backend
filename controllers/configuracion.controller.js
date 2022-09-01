@@ -34,7 +34,7 @@ const crearConfiguracion = async (req = request, res = response) => {
 };
 
 const actualizarConfiguracion = async (req = request, res = response) => {
-	const { conf_descripcion, conf_estado } = req.query;
+	const { conf_descripcion, conf_estado } = req.body;
 	const { conf_id } = req.params;
 	const token = req.header(tokenGlobal);
 	if (token) {

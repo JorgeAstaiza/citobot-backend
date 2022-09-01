@@ -1,5 +1,11 @@
 const { Router } = require('express');
-const { insertarImagen, actualizarImagen, eliminarImagen, obtenerImagenesByID } = require('../controllers/imagenes.controller');
+const {
+	insertarImagen,
+	actualizarImagen,
+	eliminarImagen,
+	obtenerImagenesByID,
+	guardarImagenFTP
+} = require('../controllers/imagenes.controller');
 const router = Router();
 
 /**
@@ -49,10 +55,10 @@ const router = Router();
  *                      schema:
  *                          type: object
  *                          properties:
- *                              data: 
+ *                              data:
  *                                  type: array
  *                                  items:
- *                                      $ref: '#/components/schemas/Imagenes'          
+ *                                      $ref: '#/components/schemas/Imagenes'
  */
 
 /**
@@ -98,7 +104,7 @@ const router = Router();
  *       required: true
  *       content:
  *         application/json:
- *           schema:             
+ *           schema:
  *              example:
  *                  ima_tam_id: 3
  *                  ima_tipo: JPG
@@ -139,6 +145,7 @@ const router = Router();
  */
 
 router.post('/crear', insertarImagen);
+router.post('/ftp', guardarImagenFTP);
 router.put('/actualizar/:id', actualizarImagen);
 router.delete('/eliminar/:id', eliminarImagen);
 router.get('/obtener', obtenerImagenesByID);

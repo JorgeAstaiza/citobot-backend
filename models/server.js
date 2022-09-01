@@ -3,6 +3,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const { dbConnection } = require('../database/config');
 const path = require('path');
+const multer = require('multer');
+const bodyParser = require('body-parser');
 //swagger
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
@@ -49,11 +51,10 @@ class Server {
 		this.app.set('port', this.port); //defino el puerto del servidor
 		this.app.use(morgan('dev')); //para poder ver las peticiones por consola
 		this.app.use(cors());
-		this.app.use(express.json());
-		this.app.use(express.urlencoded({ extended: true }));
+		this.app.use(express.json({ limit: '50000mb' }));
+		this.app.use(express.urlencoded({ limit: '50000mb', extended: true, parameterLimit: 5000000000000 }));
 		this.app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)));
 	}
-
 	routes() {
 		this.app.use(this.personasPath, require('../routes/persona.routes'));
 		this.app.use(this.usuarioPath, require('../routes/usuario.routes'));
