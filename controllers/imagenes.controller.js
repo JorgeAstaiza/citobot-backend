@@ -30,19 +30,48 @@ const guardarImagenFTP = async (req = request, res = response) => {
 	client.ftp.verbose = true;
 	try {
 		await client.access({
-			host: 'alexandercordoba.com',
-			user: 'u320411275',
-			password: '123QweAsd#%/',
+			host: 'educarenemociones.com',
+			user: 'u214255937.citobot2022',
+			password: 'Citobot2022*',
 			secure: false
 		});
 		console.log(await client.list());
 		await client.uploadFrom(`tamizajes/${nombre}`, nombre);
+		setTimeout(() => {
+			fs.unlinkSync(`tamizajes/${nombre}`);
+		}, 2000);
 	} catch (err) {
 		console.log(err);
 	}
 	client.close();
 };
+const descargarImagenFtp = async (req = request, res = response) => {
+	const { nombreImg } = req.body;
+	res.setHeader('content-type', 'image/png');
+	const ftp = require('basic-ftp');
+	const client = new ftp.Client();
+	client.ftp.verbose = true;
+	try {
+		await client.access({
+			host: 'educarenemociones.com',
+			user: 'u214255937.citobot2022',
+			password: 'Citobot2022*',
+			secure: false
+		});
+		console.log(await client.list());
+		await client.downloadTo(`controllers/${nombreImg}`, nombreImg);
 
+		await res.sendFile(nombreImg, { root: __dirname });
+		setTimeout(() => {
+			fs.unlinkSync(`controllers/${nombreImg}`);
+		}, 2000);
+	} catch (err) {
+		console.log(err);
+	}
+	client.close();
+};
+// const enviarArchivoImagen = async (req = request, res = response) => {
+// }
 const insertarImagen = async (req = request, res = response) => {
 	const token = req.header(tokenGlobal);
 	const { ima_tam_id, ima_tipo, ima_ruta } = req.body;
@@ -100,10 +129,12 @@ const obtenerImagenesByID = async (req = request, res = response) => {
 		res.status(403).send({ error: 'no autorizado' });
 	}
 };
+
 module.exports = {
 	insertarImagen,
 	actualizarImagen,
 	eliminarImagen,
 	obtenerImagenesByID,
-	guardarImagenFTP
+	guardarImagenFTP,
+	descargarImagenFtp
 };

@@ -4,7 +4,8 @@ const {
 	actualizarImagen,
 	eliminarImagen,
 	obtenerImagenesByID,
-	guardarImagenFTP
+	guardarImagenFTP,
+	descargarImagenFtp
 } = require('../controllers/imagenes.controller');
 const router = Router();
 
@@ -146,6 +147,8 @@ const router = Router();
 
 router.post('/crear', insertarImagen);
 router.post('/ftp', guardarImagenFTP);
+router.post('/ftpdescargar', descargarImagenFtp);
+
 router.put('/actualizar/:id', actualizarImagen);
 router.delete('/eliminar/:id', eliminarImagen);
 router.get('/obtener', obtenerImagenesByID);
