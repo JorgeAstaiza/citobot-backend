@@ -21,54 +21,64 @@ const respuesta = (res, err, results) => {
 const guardarImagenFTP = async (req = request, res = response) => {
 	const { base64, nombre } = req.body;
 	const ftp = require('basic-ftp');
-	var base64Data = base64.replace(/^data:image\/png;base64,/, '');
-	const buffer = Buffer.from(base64, 'base64');
-	fs.writeFile(`tamizajes/${nombre}`, base64Data, 'base64', function (err) {
-		console.log(err);
-	});
-	const client = new ftp.Client();
-	client.ftp.verbose = true;
-	try {
-		await client.access({
-			host: 'educarenemociones.com',
-			user: 'u214255937.citobot2022',
-			password: 'Citobot2022*',
-			secure: false
+	const token = req.header(tokenGlobal);
+	if (token) {
+		var base64Data = base64.replace(/^data:image\/png;base64,/, '');
+		const buffer = Buffer.from(base64, 'base64');
+		fs.writeFile(`tamizajes/${nombre}`, base64Data, 'base64', function (err) {
+			console.log(err);
 		});
-		console.log(await client.list());
-		await client.uploadFrom(`tamizajes/${nombre}`, nombre);
-		setTimeout(() => {
-			fs.unlinkSync(`tamizajes/${nombre}`);
-		}, 2000);
-	} catch (err) {
-		console.log(err);
+		const client = new ftp.Client();
+		client.ftp.verbose = true;
+		try {
+			await client.access({
+				host: 'educarenemociones.com',
+				user: 'u214255937.citobot2022',
+				password: 'Citobot2022*',
+				secure: false
+			});
+			console.log(await client.list());
+			await client.uploadFrom(`tamizajes/${nombre}`, nombre);
+			setTimeout(() => {
+				fs.unlinkSync(`tamizajes/${nombre}`);
+			}, 2000);
+		} catch (err) {
+			console.log(err);
+		}
+		client.close();
+	} else {
+		res.status(403).send({ error: 'no autorizado' });
 	}
-	client.close();
 };
 const descargarImagenFtp = async (req = request, res = response) => {
 	const { nombreImg } = req.body;
+	const token = req.header(tokenGlobal);
 	res.setHeader('content-type', 'image/png');
 	const ftp = require('basic-ftp');
 	const client = new ftp.Client();
-	client.ftp.verbose = true;
-	try {
-		await client.access({
-			host: 'educarenemociones.com',
-			user: 'u214255937.citobot2022',
-			password: 'Citobot2022*',
-			secure: false
-		});
-		console.log(await client.list());
-		await client.downloadTo(`controllers/${nombreImg}`, nombreImg);
+	if (token) {
+		try {
+			await client.access({
+				host: 'educarenemociones.com',
+				user: 'u214255937.citobot2022',
+				password: 'Citobot2022*',
+				secure: false
+			});
+			console.log(await client.list());
+			await client.downloadTo(`controllers/${nombreImg}`, nombreImg);
 
-		await res.sendFile(nombreImg, { root: __dirname });
-		setTimeout(() => {
-			fs.unlinkSync(`controllers/${nombreImg}`);
-		}, 2000);
-	} catch (err) {
-		console.log(err);
+			await res.sendFile(nombreImg, { root: __dirname });
+			setTimeout(() => {
+				fs.unlinkSync(`controllers/${nombreImg}`);
+			}, 2000);
+		} catch (err) {
+			console.log(err);
+		}
+		client.close();
+		client.ftp.verbose = true;
+	} else {
+		res.status(403).send({ error: 'no autorizado' });
 	}
-	client.close();
 };
 // const enviarArchivoImagen = async (req = request, res = response) => {
 // }
