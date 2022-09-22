@@ -19,11 +19,11 @@ const respuesta = (res, err, results) => {
 };
 
 const crearConfiguracion = async (req = request, res = response) => {
-	const { conf_nombre, conf_descripcion, conf_estado } = req.body;
+	const { conf_nombre, conf_descripcion } = req.body;
 	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(
-			`INSERT INTO configuracion (conf_nombre, conf_descripcion, conf_estado) VALUES ('${conf_nombre}', '${conf_descripcion}', '${conf_estado}');`,
+			`INSERT INTO configuracion (conf_nombre, conf_descripcion) VALUES ('${conf_nombre}', '${conf_descripcion}', '${conf_estado}');`,
 			function (err, result) {
 				respuesta(res, err, result);
 			}
@@ -34,12 +34,12 @@ const crearConfiguracion = async (req = request, res = response) => {
 };
 
 const actualizarConfiguracion = async (req = request, res = response) => {
-	const { conf_descripcion, conf_estado } = req.body;
+	const { conf_descripcion } = req.body;
 	const { conf_id } = req.params;
 	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(
-			`UPDATE configuracion SET conf_descripcion = '${conf_descripcion}', conf_estado = '${conf_estado}' WHERE configuracion.conf_id = ${conf_id};`,
+			`UPDATE configuracion SET conf_descripcion = '${conf_descripcion}' = '${conf_estado}' WHERE configuracion.conf_id = ${conf_id};`,
 			function (err, result) {
 				respuesta(res, err, result);
 			}
@@ -64,12 +64,9 @@ const eliminarConfiguracion = async (req = request, res = response) => {
 const obtenerTodasConfiguraciones = async (req = request, res = response) => {
 	const token = req.header(tokenGlobal);
 	if (token) {
-		await pool.query(
-			`SELECT conf_id, conf_nombre, conf_descripcion, conf_estado FROM configuracion;`,
-			function (err, result) {
-				respuesta(res, err, result);
-			}
-		);
+		await pool.query(`SELECT conf_id, conf_nombre, conf_descripcion FROM configuracion;`, function (err, result) {
+			respuesta(res, err, result);
+		});
 	} else {
 		res.status(403).send({ error: 'no autorizado' });
 	}
@@ -80,7 +77,7 @@ const obtenerConfiguracionById = async (req = request, res = response) => {
 	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(
-			`SELECT conf_id, conf_nombre, conf_descripcion, conf_estado FROM configuracion WHERE conf_id = ${id};`,
+			`SELECT conf_id, conf_nombre, conf_descripcion FROM configuracion WHERE conf_id = ${id};`,
 			function (err, result) {
 				respuesta(res, err, result);
 			}
@@ -94,7 +91,7 @@ const obtenerConfiguracionBynombre = async (req = request, res = response) => {
 	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(
-			`SELECT conf_id, conf_nombre, conf_descripcion, conf_estado FROM configuracion WHERE conf_nombre = '${nombre}';`,
+			`SELECT conf_id, conf_nombre, conf_descripcion FROM configuracion WHERE conf_nombre = '${nombre}';`,
 			function (err, result) {
 				respuesta(res, err, result);
 			}
