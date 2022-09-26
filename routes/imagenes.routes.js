@@ -5,7 +5,8 @@ const {
 	eliminarImagen,
 	obtenerImagenesByID,
 	guardarImagenFTP,
-	descargarImagenFtp
+	descargarImagenFtp,
+	totalImagenesByTamizaje
 } = require('../controllers/imagenes.controller');
 const router = Router();
 
@@ -152,5 +153,6 @@ router.post('/ftpdescargar', descargarImagenFtp);
 router.put('/actualizar/:id', actualizarImagen);
 router.delete('/eliminar/:id', eliminarImagen);
 router.get('/obtener', obtenerImagenesByID);
+router.get('/total-img', totalImagenesByTamizaje);
 
 module.exports = router;

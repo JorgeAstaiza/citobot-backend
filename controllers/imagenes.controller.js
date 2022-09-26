@@ -37,6 +37,12 @@ const guardarImagenFTP = async (req = request, res = response) => {
 				password: 'Citobot2022*',
 				secure: false
 			});
+			// await client.access({
+			// 	host: 'alexandercordoba.com',
+			// 	user: 'u320411275',
+			// 	password: '123QweAsd#%/',
+			// 	secure: false
+			// });
 			console.log(await client.list());
 			await client.uploadFrom(`tamizajes/${nombre}`, nombre);
 			setTimeout(() => {
@@ -64,6 +70,12 @@ const descargarImagenFtp = async (req = request, res = response) => {
 				password: 'Citobot2022*',
 				secure: false
 			});
+			// await client.access({
+			// 	host: 'alexandercordoba.com',
+			// 	user: 'u320411275',
+			// 	password: '123QweAsd#%/',
+			// 	secure: false
+			// });
 			console.log(await client.list());
 			await client.downloadTo(`controllers/${nombreImg}`, nombreImg);
 
@@ -140,11 +152,23 @@ const obtenerImagenesByID = async (req = request, res = response) => {
 	}
 };
 
+const totalImagenesByTamizaje = async (req = request, res = respone) => {
+	const { id } = req.query;
+	const token = req.header(tokenGlobal);
+	if (token) {
+		await pool.query(`SELECT count(*) as total FROM imagen i WHERE i.ima_tam_id=${id};`, function (err, result) {
+			respuesta(res, err, result);
+		});
+	} else {
+		res.status(403).send({ error: 'no autorizado' });
+	}
+};
 module.exports = {
 	insertarImagen,
 	actualizarImagen,
 	eliminarImagen,
 	obtenerImagenesByID,
 	guardarImagenFTP,
-	descargarImagenFtp
+	descargarImagenFtp,
+	totalImagenesByTamizaje
 };
