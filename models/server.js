@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 //swagger
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
+
 const swaggerSpec = {
 	definition: {
 		openapi: '3.0.0',
@@ -51,12 +52,12 @@ class Server {
 	config() {
 		this.app.set('port', this.port); //defino el puerto del servidor
 		this.app.use(morgan('dev')); //para poder ver las peticiones por consola
-		this.app.use(cors());
+		this.app.use(cors({ origin: 'http://localhost:8888' }));
 		this.app.use(express.json({ limit: '50000mb' }));
 		this.app.use(express.urlencoded({ limit: '50000mb', extended: true, parameterLimit: 5000000000000 }));
 		this.app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)));
 		// Add headers before the routes are defined
-		app.use(function (req, res, next) {
+		this.app.use(function (req, res, next) {
 			// Website you wish to allow to connect
 			res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:8888');
 
