@@ -52,14 +52,14 @@ class Server {
 	config() {
 		this.app.set('port', this.port); //defino el puerto del servidor
 		this.app.use(morgan('dev')); //para poder ver las peticiones por consola
-		this.app.use(cors({ origin: 'http://http://localhost/:8888' }));
+		this.app.use(cors({ origin: 'http://localhost/:4200' }));
 		this.app.use(express.json({ limit: '50000mb' }));
 		this.app.use(express.urlencoded({ limit: '50000mb', extended: true, parameterLimit: 5000000000000 }));
 		this.app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)));
 		// Add headers before the routes are defined
 		this.app.use(function (req, res, next) {
 			// Website you wish to allow to connect
-			res.setHeader('Access-Control-Allow-Origin', 'http://http://localhost/:8888');
+			res.setHeader('Access-Control-Allow-Origin', 'http://localhost/:4200');
 
 			// Request methods you wish to allow
 			res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
