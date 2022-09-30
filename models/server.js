@@ -52,7 +52,7 @@ class Server {
 	config() {
 		this.app.set('port', this.port); //defino el puerto del servidor
 		this.app.use(morgan('dev')); //para poder ver las peticiones por consola
-		this.app.use(cors({ origin: 'http://127.0.0.1:4200' }));
+		this.app.use(cors());
 		this.app.use(express.json({ limit: '50000mb' }));
 		this.app.use(express.urlencoded({ limit: '50000mb', extended: true, parameterLimit: 5000000000000 }));
 		this.app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)));
