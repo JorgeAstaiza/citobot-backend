@@ -23,6 +23,7 @@ const guardarImagenFTP = async (req = request, res = response) => {
 	const ftp = require('basic-ftp');
 	const token = req.header(tokenGlobal);
 	if (token) {
+		console.log(base64);
 		var base64Data = base64.replace(/^data:image\/png;base64,/, '');
 		const buffer = Buffer.from(base64, 'base64');
 		fs.writeFile(`tamizajes/${nombre}`, base64Data, 'base64', function (err) {
@@ -45,11 +46,13 @@ const guardarImagenFTP = async (req = request, res = response) => {
 			// });
 			console.log(await client.list());
 			await client.uploadFrom(`tamizajes/${nombre}`, nombre);
+			await res.status(200).send({ codigoRespuesta: 0 });
 			setTimeout(() => {
 				fs.unlinkSync(`tamizajes/${nombre}`);
 			}, 2000);
 		} catch (err) {
 			console.log(err);
+			await res.status(500).send({ codigoRespuesta: 1 });
 		}
 		client.close();
 	} else {
@@ -82,7 +85,7 @@ const descargarImagenFtp = async (req = request, res = response) => {
 			await res.sendFile(nombreImg, { root: __dirname });
 			setTimeout(() => {
 				fs.unlinkSync(`controllers/${nombreImg}`);
-			}, 2000);
+			}, 5000);
 		} catch (err) {
 			console.log(err);
 		}

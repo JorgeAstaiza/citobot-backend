@@ -1,5 +1,17 @@
 const { Router } = require('express');
-const { obtenerTamizajes, obtenerTamizajesRangoFecha, obtenerTamizajesByUsuario, obtenerTamizajesByIDRangoFecha, obtenerTamizajesByID, obtenerTamizajesByTipoID, obtenerFotos, crearTamizaje, obtenerUltimoTamizaje, obtenerTamizajesByIdTamizaje } = require('../controllers/tamizajes.controller');
+const {
+	obtenerTamizajes,
+	obtenerTamizajesRangoFecha,
+	obtenerTamizajesByUsuario,
+	obtenerTamizajesByIDRangoFecha,
+	obtenerTamizajesByID,
+	obtenerTamizajesByTipoID,
+	obtenerFotos,
+	crearTamizaje,
+	obtenerUltimoTamizaje,
+	obtenerTamizajesByIdTamizaje,
+	eliminarTamizajeById
+} = require('../controllers/tamizajes.controller');
 const router = Router();
 
 /**
@@ -35,7 +47,7 @@ const router = Router();
  *                      descripcion: genero
  *                  niv_mensaje:
  *                      type: string
- *                      descripcion: mensaje 
+ *                      descripcion: mensaje
  *              example:
  *                  per_identificacion: 1061160752
  *                  per_tip_id: CC
@@ -47,7 +59,6 @@ const router = Router();
  *                  tam_niv_id: 1
  *                  niv_mensaje: Sin riesgo de cáncer
  */
-
 
 /**
  * @swagger
@@ -63,10 +74,10 @@ const router = Router();
  *                      schema:
  *                          type: object
  *                          properties:
- *                              data: 
+ *                              data:
  *                                  type: array
  *                                  items:
- *                                      $ref: '#/components/schemas/Tamizaje'          
+ *                                      $ref: '#/components/schemas/Tamizaje'
  */
 
 /**
@@ -338,7 +349,7 @@ const router = Router();
  *         application/json:
  *           schema:
  *              type: object
- *              items: 
+ *              items:
  *                  tam_pac_per_identificacion:
  *                      type: string
  *                      descripcion: numero indentificacion paciente
@@ -388,9 +399,8 @@ router.get('/tipoIdentificacion', obtenerTamizajesByTipoID);
 router.get('/fotos', obtenerFotos);
 router.get('/ultimo', obtenerUltimoTamizaje);
 router.get('/id', obtenerTamizajesByIdTamizaje);
+router.delete('/eliminarbyid', eliminarTamizajeById);
 
 router.post('/crear', crearTamizaje);
-
-
 
 module.exports = router;

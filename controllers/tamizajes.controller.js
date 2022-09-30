@@ -173,6 +173,18 @@ const crearTamizaje = async (req = request, res = response) => {
 	}
 };
 
+const eliminarTamizajeById = async (req = request, res = response) => {
+	const id = req.query;
+	const token = req.header(tokenGlobal);
+	if (token) {
+		await pool.query(`DELETE FROM tamizaje WHERE tam_id = '${id}'`, function (err, result) {
+			respuesta(res, err, result);
+		});
+	} else {
+		res.status(403).send({ error: 'no autorizado' });
+	}
+};
+
 module.exports = {
 	obtenerTamizajes,
 	obtenerTamizajesByUsuario,
@@ -183,5 +195,6 @@ module.exports = {
 	obtenerFotos,
 	crearTamizaje,
 	obtenerUltimoTamizaje,
-	obtenerTamizajesByIdTamizaje
+	obtenerTamizajesByIdTamizaje,
+	eliminarTamizajeById
 };
