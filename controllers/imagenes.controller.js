@@ -79,6 +79,7 @@ const descargarImagenFtp = async (req = request, res = response) => {
 			// 	password: '123QweAsd#%/',
 			// 	secure: false
 			// });
+
 			console.log(await client.list());
 			await client.downloadTo(`controllers/${nombreImg}`, nombreImg);
 
