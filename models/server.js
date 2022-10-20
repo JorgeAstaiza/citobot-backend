@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 //swagger
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
-
+const hostname = 'localhost';
 const swaggerSpec = {
 	definition: {
 		openapi: '3.0.0',
@@ -90,8 +90,8 @@ class Server {
 	}
 
 	start() {
-		this.app.listen(this.app.get('port'), () => {
-			console.log('servidor corriendo puerto', this.app.get('port'));
+		this.app.listen(this.app.get('port'), hostname, () => {
+			console.log(`Server running at http://${hostname}:${this.app.get('port')}/`);
 		});
 	}
 }
