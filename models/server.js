@@ -28,7 +28,7 @@ const swaggerSpec = {
 class Server {
 	constructor() {
 		this.app = express();
-		this.port = process.env.PORT || 3000;
+		this.port = 3000;
 		this.personasPath = '/api/personas';
 		this.usuarioPath = '/api/usuarios';
 		this.pacientePath = '/api/pacientes';
