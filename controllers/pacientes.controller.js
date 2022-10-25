@@ -2,6 +2,7 @@ const { response, request } = require('express');
 const { pool } = require('../database/config');
 
 const tokenGlobal = 'Authorization';
+// comment
 const respuesta = (res, err, results) => {
 	if (err) {
 		res.json({
