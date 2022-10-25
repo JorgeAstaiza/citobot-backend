@@ -95,6 +95,7 @@ const actualizarPaciente = async (req = request, res = response) => {
 		pac_menopausia,
 		pac_infecciones_ts
 	} = req.body;
+
 	console.log(req.body);
 	const token = req.header(tokenGlobal);
 	if (token) {
