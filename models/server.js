@@ -28,7 +28,7 @@ const swaggerSpec = {
 class Server {
 	constructor() {
 		this.app = express();
-		this.port = process.env.PORT || 8080;
+		this.port = process.env.PORT || 3000;
 		this.personasPath = '/api/personas';
 		this.usuarioPath = '/api/usuarios';
 		this.pacientePath = '/api/pacientes';
@@ -90,8 +90,8 @@ class Server {
 	}
 
 	start() {
-		this.app.listen(this.app.get('port'), hostname, () => {
-			console.log(`Server running at http://${hostname}:${this.app.get('port')}/`);
+		this.app.listen(this.app.get('port'), () => {
+			console.log(`Server running at port:${this.app.get('port')}/`);
 		});
 	}
 }
