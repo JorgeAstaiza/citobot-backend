@@ -22,7 +22,7 @@ const obtenerTamizajes = async (req = request, res = response) => {
 	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(
-			'SELECT pe.per_tip_id, pe.per_identificacion, t.tam_id, t.tam_fecha, t.tam_contraste, t.tam_vph, t.tam_vph_no_info, t.tam_niv_id, n.niv_mensaje FROM tamizaje t INNER JOIN paciente p on (t.tam_pac_per_identificacion = p.pac_per_identificacion) INNER JOIN persona pe on (pe.per_identificacion = p.pac_per_identificacion) INNER JOIN nivel_riesgo n on (n.niv_id = t.tam_niv_id);',
+			'SELECT pe.per_tip_id, pe.per_identificacion, t.tam_id, t.tam_fecha, t.tam_contraste, t.tam_vph, t.tam_vph_no_info, t.tam_niv_id, n.niv_mensaje FROM tamizaje t INNER JOIN paciente p on (t.tam_pac_per_identificacion = p.pac_per_identificacion) INNER JOIN persona pe on (pe.per_identificacion = p.pac_per_identificacion) INNER JOIN nivel_riesgo n on (n.niv_id = t.tam_niv_id) order by tam_fecha desc;',
 			function (err, result) {
 				respuesta(res, err, result);
 			}
