@@ -184,7 +184,6 @@ const eliminarTamizajeById = async (req = request, res = response) => {
 		res.status(403).send({ error: 'no autorizado' });
 	}
 };
-
 module.exports = {
 	obtenerTamizajes,
 	obtenerTamizajesByUsuario,
