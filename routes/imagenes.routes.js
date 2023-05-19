@@ -4,9 +4,10 @@ const {
 	actualizarImagen,
 	eliminarImagen,
 	obtenerImagenesByID,
-	guardarImagenFTP,
-	descargarImagenFtp,
-	totalImagenesByTamizaje
+	guardarImagenAWS,
+	totalImagenesByTamizaje,
+	obtenerImagenAWS,
+	descargarImagenAWS
 } = require('../controllers/imagenes.controller');
 const router = Router();
 
@@ -147,8 +148,9 @@ const router = Router();
  */
 
 router.post('/crear', insertarImagen);
-router.post('/ftp', guardarImagenFTP);
-router.post('/ftpdescargar', descargarImagenFtp);
+router.post('/save-img-aws', guardarImagenAWS);
+router.get('/get-img-aws/:fileName', obtenerImagenAWS);
+router.get('/descargar-img/:fileName', descargarImagenAWS);
 
 router.put('/actualizar/:id', actualizarImagen);
 router.delete('/eliminar/:id', eliminarImagen);

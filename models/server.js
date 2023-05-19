@@ -2,9 +2,10 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const { dbConnection } = require('../database/config');
-const path = require('path');
-const multer = require('multer');
-const bodyParser = require('body-parser');
+// const path = require('path');
+// const multer = require('multer');
+// const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
 //swagger
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
@@ -28,7 +29,7 @@ const swaggerSpec = {
 class Server {
 	constructor() {
 		this.app = express();
-		this.port = process.env.PORT || 3000;
+		this.port = process.env.PORT || 3001;
 		this.personasPath = '/api/personas';
 		this.usuarioPath = '/api/usuarios';
 		this.pacientePath = '/api/pacientes';
@@ -55,6 +56,7 @@ class Server {
 		this.app.use(cors({ origin: '*' }));
 		this.app.use(express.json({ limit: '50000mb' }));
 		this.app.use(express.urlencoded({ limit: '50000mb', extended: true, parameterLimit: 5000000000000 }));
+		this.app.use(express.static('images'));
 		this.app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(swaggerSpec)));
 		// Add headers before the routes are defined
 		this.app.use(function (req, res, next) {
@@ -70,6 +72,12 @@ class Server {
 			// Pass to next layer of middleware
 			next();
 		});
+		this.app.use(
+			fileUpload({
+				useTempFiles: true,
+				tempFileDir: './tamizajes'
+			})
+		);
 	}
 	routes() {
 		this.app.use(this.personasPath, require('../routes/persona.routes'));
