@@ -66,6 +66,85 @@ const router = Router();
 
 /**
  * @swagger
+ * /api/imagenes/get-img-aws/{fileName}:
+ *  get:
+ *      summary: obtener metadata de la imagen en aws
+ *      tags: [Imagenes]
+ *      parameters:
+ *          - in: path
+ *            name: fileName
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: nombre imagen
+ *      responses:
+ *          200:
+ *              description: Imagen
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              data:
+ *                                  type: array
+ *                                  items:
+ *                                      $ref: '#/components/schemas/Imagenes'
+ */
+
+/**
+ * @swagger
+ * /api/imagenes/descargar-img/{fileName}:
+ *  get:
+ *      summary: obtener URL de la imagen en aws
+ *      tags: [Imagenes]
+ *      parameters:
+ *          - in: path
+ *            name: fileName
+ *            schema:
+ *              type: string
+ *            required: true
+ *            description: obtener url imagen
+ *      responses:
+ *          200:
+ *              description: Imagen
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              data:
+ *                                  type: array
+ *                                  items:
+ *                                      $ref: '#/components/schemas/Imagenes'
+ */
+
+/**
+ * @swagger
+ * /api/imagenes/save-img-aws:
+ *   post:
+ *     summary: guardar una imagen en AWS
+ *     tags: [Imagenes]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *              example:
+ *                  file: file
+ *                  nombre: hola.png
+ *     responses:
+ *       201:
+ *         description: Imagen guardada exitosamente!
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/RespuestaGeneral'
+ *       500:
+ *         description: Some server error
+ */
+
+/**
+ * @swagger
  * /api/imagenes/crear:
  *   post:
  *     summary: guardar una imagen
