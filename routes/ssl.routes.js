@@ -2,6 +2,6 @@ const { Router } = require('express');
 const { getSSL } = require('../controllers/ssl.controller');
 const router = Router();
 
-router.get('/.well-known/pki-validation/590FA4162D798F2C4B3DED515776A14B.txt', getSSL);
+router.get('/.well-known/pki-validation/2A6C7761D4D4C8DAFD0E56D4048937B4.txt', getSSL);
 
 module.exports = router;
