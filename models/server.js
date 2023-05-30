@@ -91,7 +91,7 @@ class Server {
 		this.app.use(this.profesionPath, require('../routes/profesion.routes'));
 		this.app.use(this.configuracionPath, require('../routes/configuracion.routes'));
 		this.app.use(this.configUsuarioPath, require('../routes/confusuario.routes'));
-		this.app.use('/api', require('../routes/ssl.routes'));
+		this.app.use('', require('../routes/ssl.routes'));
 	}
 
 	start() {
