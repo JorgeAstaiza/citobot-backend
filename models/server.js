@@ -109,7 +109,7 @@ class Server {
 			console.log(`Server running at port:${this.app.get('port')}/`);
 		});
 		const httpsServer = https.createServer(credentials, this.app);
-		httpsServer.listen(443);
+		httpsServer.listen(8443);
 	}
 }
 
