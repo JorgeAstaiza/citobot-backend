@@ -1,7 +1,5 @@
 const getSSL = (req = request, res = response) => {
-	res.sendFile(
-		'/Users/jorge.astaiza/Documents/projects/citobot/backend/.well-known/590FA4162D798F2C4B3DED515776A14B.txt'
-	);
+	res.sendFile('/home/ubuntu/citobot-backend/.well-known/2A6C7761D4D4C8DAFD0E56D4048937B4.txt');
 };
 module.exports = {
 	getSSL
