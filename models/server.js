@@ -105,10 +105,10 @@ class Server {
 	}
 
 	start() {
-		const httpsServer = https.createServer(credentials, this.app);
 		this.app.listen(this.app.get('port'), () => {
 			console.log(`Server running at port:${this.app.get('port')}/`);
 		});
+		const httpsServer = https.createServer(credentials, this.app);
 		httpsServer.listen(8443);
 	}
 }
