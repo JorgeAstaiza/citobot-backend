@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const fs = require('fs');
+const https = require('https');
 const { dbConnection } = require('../database/config');
 // const path = require('path');
 // const multer = require('multer');
@@ -24,6 +26,14 @@ const swaggerSpec = {
 		]
 	},
 	apis: ['./routes/*.js']
+};
+
+const key = fs.readFileSync('./private.key');
+const cert = fs.readFileSync('./certificate.crt');
+
+const credentials = {
+	key,
+	cert
 };
 
 class Server {
@@ -95,9 +105,11 @@ class Server {
 	}
 
 	start() {
+		const httpsServer = https.createServer(credentials, this.app);
 		this.app.listen(this.app.get('port'), () => {
 			console.log(`Server running at port:${this.app.get('port')}/`);
 		});
+		httpsServer.listen(8443);
 	}
 }
 
