@@ -1,23 +1,22 @@
 const mysql = require('mysql');
-const keys = require('./keys');
 
 const pool = mysql.createPool({
-    connectionLimit : 10,
-    host: '212.1.208.101',
-    port: 3306,
-    user: 'u214255937_citobot_admin',
-    password: 'k3D/MZOZ3A$',
-    database: 'u214255937_citobot'
+	connectionLimit: 10,
+	host: 'citobottest.cp0scrkpp9ro.us-east-2.rds.amazonaws.com',
+	port: 3306,
+	user: 'cito_admin',
+	password: 'C1t0b0t2023*',
+	database: 'citobottest'
 });
-const dbConnection = async() => {
-    pool.getConnection((err, connection) => {
-        if (err) {
-            throw err;
-        }else {
-            console.log('DB is connected')
-        }
-    })
-}
+const dbConnection = async () => {
+	pool.getConnection((err, connection) => {
+		if (err) {
+			throw err;
+		} else {
+			console.log('DB is connected');
+		}
+	});
+};
 
 // const dbConnection = async() => {
 //     try {
@@ -40,5 +39,6 @@ const dbConnection = async() => {
 // }
 
 module.exports = {
-    pool, dbConnection
-}
+	pool,
+	dbConnection
+};
