@@ -22,23 +22,34 @@ const respuesta = (res, err, results) => {
 const guardarImagenAWS = async (req = request, res = response) => {
 	const { nombre } = req.body;
 	const token = req.header(tokenGlobal);
-	if (req.files.file && token) {
-		const result = await uploadFile(req.files.file, nombre);
-		res.json({ result });
-		setTimeout(() => {
-			fs.unlinkSync(req.files.file.tempFilePath);
-		}, 2000);
+	if (token) {
+		if (req.files.file) {
+			const result = await uploadFile(req.files.file, nombre);
+			res.json({ result });
+			setTimeout(() => {
+				fs.unlinkSync(req.files.file.tempFilePath);
+			}, 2000);
+		} else {
+			res.status(403).send({ error: 'se requere enviar la imagen de tipo file' });
+		}
+	} else {
+		res.status(403).send({ error: 'no autorizado' });
 	}
 };
 
 const obtenerImagenAWS = async (req = request, res = response) => {
 	const token = req.header(tokenGlobal);
-
-	if (req.params.fileName && token) {
-		const result = await getFileURL(req.params.fileName);
-		res.json({
-			url: result
-		});
+	if (token) {
+		if (req.params.fileName) {
+			const result = await getFileURL(req.params.fileName);
+			res.json({
+				url: result
+			});
+		} else {
+			res.status(403).send({ error: 'se requere el nombre de la imagen' });
+		}
+	} else {
+		res.status(403).send({ error: 'no autorizado' });
 	}
 };
 

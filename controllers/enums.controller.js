@@ -20,10 +20,11 @@ const respuesta = (res, err, results) => {
 
 const consutarEnum = async (req = request, res = response) => {
 	const { tabla, columna } = req.query;
+	console.log(tabla, columna);
 	const token = req.header(tokenGlobal);
 	if (token) {
 		await pool.query(
-			`SELECT SUBSTRING(COLUMN_TYPE,5) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='u214255937_citobot' AND TABLE_NAME='${tabla}' AND COLUMN_NAME='${columna}';`,
+			`SELECT SUBSTRING(COLUMN_TYPE,5) FROM information_schema.COLUMNS WHERE TABLE_NAME='${tabla}' AND COLUMN_NAME='${columna}';`,
 			function (err, result) {
 				respuesta(res, err, result);
 			}
