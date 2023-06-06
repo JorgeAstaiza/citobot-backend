@@ -41,8 +41,7 @@ const downloadFile = async fileName => {
 		});
 		try {
 			const result = await client.send(command);
-			console.log(result);
-			result.Body.pipe(fs.createWriteStream(`./images/${fileName}`));
+			result.Body.pipe(fs.createWriteStream(`./controllers/${fileName}`));
 		} catch (error) {
 			console.log('error ', error);
 		}

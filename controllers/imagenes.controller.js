@@ -2,6 +2,7 @@ const { response, request } = require('express');
 const { pool } = require('../database/config');
 const tokenGlobal = 'Authorization';
 const fs = require('fs');
+
 const { uploadFile, getFile, downloadFile, getFileURL } = require('../s3');
 const respuesta = (res, err, results) => {
 	if (err) {
@@ -22,19 +23,15 @@ const respuesta = (res, err, results) => {
 const guardarImagenAWS = async (req = request, res = response) => {
 	const { nombre } = req.body;
 	const token = req.header(tokenGlobal);
-	if (token) {
-		if (req.files.file) {
-			const result = await uploadFile(req.files.file, nombre);
-			res.json({ result });
-			setTimeout(() => {
-				fs.unlinkSync(req.files.file.tempFilePath);
-			}, 2000);
+	if (req.files.file) {
+		const result = await uploadFile(req.files.file, nombre);
+		res.json({ result });
+		setTimeout(() => {
+			fs.unlinkSync(req.files.file.tempFilePath);
+		}, 2000);
 		} else {
 			res.status(403).send({ error: 'se requere enviar la imagen de tipo file' });
 		}
-	} else {
-		res.status(403).send({ error: 'no autorizado' });
-	}
 };
 
 const obtenerImagenAWS = async (req = request, res = response) => {
@@ -55,11 +52,18 @@ const obtenerImagenAWS = async (req = request, res = response) => {
 
 const descargarImagenAWS = async (req = request, res = response) => {
 	const token = req.header(tokenGlobal);
-
+	
 	if (req.params.fileName && token) {
+		const nombreImg = req.params.fileName;
+		console.log(nombreImg);
 		try {
 			await downloadFile(req.params.fileName);
-			res.json({ message: 'archivo descargado' });
+			setTimeout(() => {
+				res.sendFile(nombreImg, { root: __dirname });
+			}, 500);
+			setTimeout(() => {
+				fs.unlinkSync(`controllers/${nombreImg}`);
+			}, 7000);
 		} catch (error) {
 			res.json({ error: error });
 		}
