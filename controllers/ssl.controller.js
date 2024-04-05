@@ -1,5 +1,5 @@
 const getSSL = (req = request, res = response) => {
-	res.sendFile('/home/ubuntu/citobot-backend/.well-known/pki-validation/E47563CD58A1705D29BB63CBE2714737.txt');
+	res.sendFile('/home/ubuntu/citobot-backend/.well-known/pki-validation/F746520E45C85532499CBEA4CA728FF8.txt');
 };
 module.exports = {
 	getSSL
